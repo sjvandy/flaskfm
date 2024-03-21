@@ -12,3 +12,8 @@ db = SQLAlchemy
 @app.route('/index')
 def greeting():
     return render_template('greeting.html')
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('404.html')
+
