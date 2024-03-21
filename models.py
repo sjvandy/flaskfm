@@ -12,8 +12,21 @@ class User(db.Model):
 
 #create the Song model here + add a nice representation method
 class Song(db.Model):
-    id
-    
+    id = db.Column(db.Integer, primary_key = True)
+    artist = db.Column(db.String, index=True, unique=False)
+    title = db.Column(db.String, index=True, unique=False)
+    n = db.Column(db.Integer, index=False, unique=False)
+
+    def __repr__(self):
+        return "{} by {}".format(self.title, self.artist)
+
 #create the Item model here + add a nice representation method
-    
+class Item(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    song_id = db.Column(db.Integer, db.ForeignKey('song.id'))
+    playlist_id = db.Column(db.Integer, db.ForeignKey('playlist.id'))
+
 #create the Playlist model here + add a nice representation method
+class Playlist(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    items = db.relationship('Item', backref='playlist', lazy='dynamic')
