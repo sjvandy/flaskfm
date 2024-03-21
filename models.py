@@ -1,4 +1,4 @@
-from app import app, db
+from app import db
 
 #the User model: each user has a username, and a playlist_id foreign key referring
 #to the user's Playlist
