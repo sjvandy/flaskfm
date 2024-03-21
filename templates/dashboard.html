@@ -1,21 +1,19 @@
-{% extends "_base.html" %}
-
-{% block content %}
+{% extends "_base.html" %} {% block content %}
 
 <h2>Hi, admin. Would you like to add more songs?</h2>
 <div class="row">
-  <div class="column" style="background-color:#BDB76B;">
+  <div class="column" style="background-color: #bdb76b">
     <h2>Songs:</h2>
 
     {% for song in songs %}
-        <p>{{song}}</p>
+    <p>{{song}}</p>
     {% endfor %}
   </div>
 
-  <div class="column" style="background-color:#F0F8FF;">
+  <div class="column" style="background-color: #f0f8ff">
     <h2>Popularity of songs:</h2>
     {% for song in unpopular_songs %}
-        <p>{{song}} only {{song.n}} times added :(</p>
+    <p>{{song}} only {{song.n}} times added :(</p>
     {% endfor %}
   </div>
 </div>
@@ -23,17 +21,16 @@
 <div class="formwrapper">
   <h2 class="title">Add new songs:</h2>
   <form action="" method="post" novalidate>
-  {{ form.hidden_tag() }}
-        <p>
-            {{ form.title.label }}<br>
-            {{ form.title(size=50) }}<br>
-
-        </p>
-        <p>
-            {{ form.artist.label }}<br>
-            {{ form.artist(size=50) }}<br>
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.title.label }}<br />
+      {{ form.title(size=50) }}<br />
+    </p>
+    <p>
+      {{ form.artist.label }}<br />
+      {{ form.artist(size=50) }}<br />
+    </p>
+    <p>{{ form.submit() }}</p>
+  </form>
 </div>
 {% endblock %}

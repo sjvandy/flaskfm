@@ -8,16 +8,16 @@ from flask import render_template, request, url_for, redirect, flash
 
 #A form for inputing new songs via Dashboard
 class SongForm(FlaskForm):
-  title = StringField(label = "Song Title:", validators=[DataRequired()])
-  artist = StringField(label = "Artist:", validators=[DataRequired()])
-  submit = SubmitField("Add Song")
+    title = StringField(label = "Song Title:", validators=[DataRequired()])
+    artist = StringField(label = "Artist:", validators=[DataRequired()])
+    submit = SubmitField("Add Song")
 
 #A function we made to check if an item to be added is already in the playlist
 def exists(item, playlist): # Returns a boolean, True if playlist contains item, Fase if otherwise
-  for i in playlist: #for each item in playlist
-    if i.song_id == item.song_id: #check if the primary key is equal
-       return True
-  return False
+    for i in playlist: #for each item in playlist
+        if i.song_id == item.song_id: #check if the primary key is equal
+            return True 
+    return False
 
 #The home page of FlaskFM
 #Lists all the users currently in the database
@@ -32,33 +32,33 @@ def profiles():
 #the user's playlist 
 @app.route('/profile/<int:user_id>')
 def profile(user_id):
-   user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
-   songs = Song.query.all()
-   my_playlist = None #change here to a database query
-   return render_template('profile.html', user = user, songs = songs, my_playlist = my_playlist)
+    user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
+    songs = Song.query.all()
+    my_playlist = None #change here to a database query
+    return render_template('profile.html', user = user, songs = songs, my_playlist = my_playlist)
 
 #Adds new songs to a user's playlist from the song library
 #redirects back to the profile that issued the addition
 @app.route('/add_item/<int:user_id>/<int:song_id>/<int:playlist_id>')
 def add_item(user_id, song_id, playlist_id):
-   new_item = Item(song_id = song_id, playlist_id = playlist_id)
-   user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
-   my_playlist = Playlist.query.filter_by(id = user.playlist_id).first()
-   if not exists(new_item, my_playlist.items):
-      song = Song.query.get(song_id)
-      #using db session add the new item
-      #increase the counter for the song here
-      #commit the database changes here
-   return redirect(url_for('profile', user_id = user_id))
+    new_item = Item(song_id = song_id, playlist_id = playlist_id)
+    user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
+    my_playlist = Playlist.query.filter_by(id = user.playlist_id).first()
+    if not exists(new_item, my_playlist.items):
+        song = Song.query.get(song_id)
+    #using db session add the new item
+    #increase the counter for the song here
+    #commit the database changes here
+    return redirect(url_for('profile', user_id = user_id))
 
 #Remove an item from a user's playlist
 #Redirects back to the profile that issues the removal
 @app.route('/remove_item/<int:user_id>/<int:item_id>')
 def remove_item(user_id, item_id):
-   #from the Item model, fetch the item with primary key item_id to be deleted
-   #using db.session delete the item
-   #commit the deletion
-   return redirect(url_for('profile', user_id = user_id))
+    #from the Item model, fetch the item with primary key item_id to be deleted
+    #using db.session delete the item
+    #commit the deletion
+    return redirect(url_for('profile', user_id = user_id))
    
 #Display the Dashboard page with a form for adding songs
 #Renders the dashboard template
@@ -66,7 +66,7 @@ def remove_item(user_id, item_id):
 def dashboard():
     form = SongForm()
     if request.method == 'POST' and form.validate():
-       pass
+        pass
     #create a new song here
     #add it to the database
     #commit
