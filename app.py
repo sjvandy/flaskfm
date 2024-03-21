@@ -1,3 +1,4 @@
+from typing import TYPE_CHECKING
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 
@@ -7,6 +8,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET KEY'] = 'all-hail-the-magic-conch'
 
 db = SQLAlchemy(app)
+if TYPE_CHECKING: # Adds autocomplete to SQL-Alchemy
+    from flask_sqlalchemy.model import Model
+
+    BaseModel = db.make_declarative_base(Model)
+else:
+    BaseModel = db.Model
 
 @app.route('/')
 @app.route('/index')
